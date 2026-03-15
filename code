@@ -3,15 +3,69 @@
 
 using namespace std; 
 
-double firstCalculation, secondCalculation, cloudBase, windChill, dewPoint, airTemp, windSpeed;
+//declaring the functions, input variables are airTemp windSpeed and dewPoint
+void userInputs(double& airTemp, double& windSpeed, double& dewPoint);
+void weatherCalculations(double& airTemp, double& windSpeed, double& dewPoint, double& windChill, double& cloudBase);
+void weatherDisplay(double& airTemp, double& windSpeed, double& dewPoint, double& windChill, double& cloudBase);
 
-void windChillCalculations () {
-    firstCalculation = 35.75*windSpeed;
-    secondCalculation = 0.4275*airTemp*windSpeed;
-    windChill = 35.74+0.6215*airTemp-pow(firstCalculation, 16)+pow(secondCalculation, 16);
+int main()
+{
+    double firstCalculation, secondCalculation, cloudBase, windChill, dewPoint, airTemp, windSpeed;
+    //intro, explains to user use of program and what they have to do
+    cout << "--------------------------------" << endl;
+    cout << "| This program will be used to |" << endl;
+    cout << "|   calculate wind chill and   |" << endl;
+    cout << "|     cloud base using the     |" << endl;
+    cout << "|    temperature in degrees    |" << endl;
+    cout << "|  farenheit, wind speed, and  |" << endl;
+    cout << "|  the dew point. All of which |" << endl;
+    cout << "|    are given by the user.    |" << endl;
+    cout << "--------------------------------" << endl;
+    
+    userInputs(airTemp, windSpeed, dewPoint); //takes in all the user inputs for use
+    
+    weatherCalculations(airTemp, windSpeed, dewPoint, windChill, cloudBase); //calculates wind chill and cloud base using user input
+    
+    weatherDisplay(airTemp, windSpeed, dewPoint, windChill, cloudBase); //displays a table of all data provided and calculated
+    
+    }
+    
+    
+void userInputs(double& airTemp, double& windSpeed, double& dewPoint) { //all user inputs
+    cout << "\nWhat is the temperature in degrees farenheit?  ";
+    cin >> airTemp;
+    while (!airTemp) { //invalid input/fail check for air temperature
+        cout << "Invalid input, please enter your temperature.  ";
+        cin.clear();
+        cin.ignore(10000, '\n');
+        cin >> airTemp;
+    }
+    
+    cout << "\nWhat is the wind speed in MPH?  ";
+    cin >> windSpeed;
+    while (!windSpeed) { //invalid input/fail check for wind speed
+        cout << "Invalid input, please enter your wind speed.  ";
+        cin.clear();
+        cin.ignore(10000, '\n');
+        cin >> windSpeed;
+    }
+    
+    cout << "\nWhat is the dew point?  ";
+    cin >> dewPoint;
+    while (!dewPoint) { //invalid input/fail check for dew point
+        cout << "Invalid input, please enter your dew point.  ";
+        cin.clear();
+        cin.ignore(10000, '\n');
+        cin >> dewPoint;
+    }
 }
 
-void finalDisplay () {
+void weatherCalculations(double& airTemp, double& windSpeed, double& dewPoint, double& windChill, double& cloudBase)  {
+    windChill = 35.74 + (0.6215*airTemp) - (37.75 * pow(windSpeed, 0.16)) + (0.4275 * airTemp * pow(windSpeed, 0.16)); //proper calculations for wind chill, sectioned off and done using PEMDAS properly
+    cloudBase = 1000*((airTemp-dewPoint)/4.4); //proper calculations for cloud base
+}
+
+void weatherDisplay(double& airTemp, double& windSpeed, double& dewPoint, double& windChill, double& cloudBase) { //final little display, showing all info gathered throughout the entirety of the program
     cout << "------------------------------------------------------------------" << endl;
     cout << "|   Wind Chill   |     " << windChill << endl;
     cout << "------------------------------------------------------------------" << endl;
@@ -23,50 +77,4 @@ void finalDisplay () {
     cout << "------------------------------------------------------------------" << endl;
     cout << "|   Dew Point    |     " << dewPoint << endl;
     cout << "------------------------------------------------------------------" << endl;
-    
-}
-
-int main()
-{
-    cout << "--------------------------------" << endl;
-    cout << "| This program will be used to |" << endl;
-    cout << "|   calculate wind chill and   |" << endl;
-    cout << "|     cloud base using the     |" << endl;
-    cout << "|    temperature in degrees    |" << endl;
-    cout << "|  farenheit, wind speed, and  |" << endl;
-    cout << "|  the dew point. All of which |" << endl;
-    cout << "|    are given by the user.    |" << endl;
-    cout << "--------------------------------" << endl;
-    
-    cout << "\nWhat is the temperature in degrees farenheit?  ";
-    cin >> airTemp;
-    while (!airTemp) {
-        cout << "Invalid input, please enter your temperature.  ";
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cin >> airTemp;
-    }
-    
-    cout << "\nWhat is the wind speed in MPH?  ";
-    cin >> windSpeed;
-    while (!windSpeed) {
-        cout << "Invalid input, please enter your wind speed.  ";
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cin >> windSpeed;
-    }
-    
-    cout << "\nWhat is the dew point?  ";
-    cin >> dewPoint;
-    while (!dewPoint) {
-        cout << "Invalid input, please enter your dew point.  ";
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cin >> dewPoint;
-    }
-    
-    windChillCalculations ();
-    cloudBase = 1000*((airTemp-dewPoint)/4.4);
-    finalDisplay ();
-    
 }
