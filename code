@@ -3,10 +3,10 @@
 
 using namespace std; 
 
-//declaring the functions, input variables are airTemp windSpeed and dewPoint
-void userInputs(double& airTemp, double& windSpeed, double& dewPoint);
-void weatherCalculations(double& airTemp, double& windSpeed, double& dewPoint, double& windChill, double& cloudBase);
-void weatherDisplay(double& airTemp, double& windSpeed, double& dewPoint, double& windChill, double& cloudBase);
+//declaring the function
+void userInputs(double& airTemp, double& windSpeed, double& dewPoint); //all user inputs gathered throughout the program
+void weatherCalculations(double& airTemp, double& windSpeed, double& dewPoint, double& windChill, double& cloudBase); //all calculations being done throughout the program
+void weatherDisplay(double& airTemp, double& windSpeed, double& dewPoint, double& windChill, double& cloudBase); //all data throughout the program
 
 int main()
 {
